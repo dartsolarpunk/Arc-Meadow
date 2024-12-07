@@ -6,6 +6,7 @@
     <meta name="description" content="Arc Meadow - Cutting-edge 3D animation software powered by the revolutionary Arc Edge Algorithm.">
     <meta name="keywords" content="Arc Meadow, 3D animation, Arc Edge Algorithm, software suite">
     <title>Arc Meadow | 3D Animation Software</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/dartsolarpunk/Arc-Meadow/main/2451db_e1a08e43112342c5aca0e958034164a3~mv2.png" type="image/png">
     <style>
         body, html {
             margin: 0;
@@ -21,18 +22,19 @@
             background: rgba(0, 0, 0, 0.7);
             padding: 10px 20px;
             z-index: 1000;
-        }
-
-        .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #fff;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
         }
 
         .nav-links {
@@ -96,26 +98,28 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            //background: rgba(0, 0, 0, 0.5);
             z-index: 1;
         }
 
-        .hero-text {
+        .hero-logo-title {
             position: relative;
             z-index: 10;
+            text-align: center;
         }
 
-        .hero-text h1 {
-            font-size: 3rem;
-            margin: 0;
+        .hero-logo-title img {
+            width: 120px; /* Adjust the size of the logo for main title */
+            margin-bottom: 20px;
+            padding-bottom: 300px;
         }
 
-        .hero-text p {
-            font-size: 1.5rem;
-            margin: 20px 0;
+        .hero-logo-title p {
+            font-size: 1.2rem;
+            margin: 10px 0;
         }
 
-        .hero-text .btn {
+        .hero-logo-title .btn {
             background: #ff5722;
             padding: 15px 30px;
             border-radius: 5px;
@@ -166,30 +170,33 @@
 </head>
 <body>
     <header>
-        <nav class="navbar">
-            <div class="logo">Arc Meadow</div>
-            <ul class="nav-links">
-                <li><a href="#features">Features</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#demo" class="btn">Try Demo</a></li>
-            </ul>
-        </nav>
+        <div class="logo">
+            <img src="https://raw.githubusercontent.com/dartsolarpunk/Arc-Meadow/main/2451db_e1a08e43112342c5aca0e958034164a3~mv2.png" alt="Arc Meadow Logo">
+        </div>
+        <ul class="nav-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#demo" class="btn">Try Demo</a></li>
+        </ul>
     </header>
 
     <main>
         <section class="hero">
             <!-- Placeholder for background video -->
-          <video autoplay muted loop id="background-video">
+            <video autoplay muted loop id="background-video">
                 <source src="https://raw.githubusercontent.com/dartsolarpunk/Arc-Meadow/main/Untitled%202024-12-07%2010.46.12.mp4" type="video/mp4">
-              
                 <!-- Fallback background image -->
                 <img src="https://raw.githubusercontent.com/dartsolarpunk/Arc-Meadow/main/Arrow%20Film%202.png" alt="Background">
             </video>
             <div class="overlay"></div>
-            <div class="hero-text">
-                <h1>Arc Meadow</h1>
+            <div class="hero-logo-title">
+                <img src="https://raw.githubusercontent.com/dartsolarpunk/Arc-Meadow/main/2451db_e1a08e43112342c5aca0e958034164a3~mv2.png" alt="Arc Meadow">
+<br>
+       <br>        
                 <p>Where 3D Animation Meets the Future</p>
+                <br>
+                <br>
                 <a href="#about" class="btn">Learn More</a>
             </div>
         </section>
