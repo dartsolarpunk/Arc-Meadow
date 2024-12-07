@@ -65,9 +65,11 @@
             position: relative;
             text-align: center;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            padding-bottom: 100px; /* Adjust as necessary */
         }
 
         .hero video {
@@ -92,29 +94,40 @@
             object-fit: cover;
         }
 
-        
-        .hero-logo-title {
+        .hero-logo-container {
           
             position: relative;
-            z-index: 10;
-            text-align: center;
-            
+            z-index: 2;
+            margin-bottom: 100px;
         }
 
-        .hero-logo-title img {
-            width: 120px; /* Adjust the size of the logo for main title */
-            margin-bottom: 20px;
-            padding-bottom: 300px;
+        .hero-logo-container img {
+            max-width: 300px;
+            max-height: 300px;
+            margin: 0 auto;
+            display: block;
         }
 
-        .hero-logo-title p {
+        .hero-description {
+            margin-top: 10px;
             font-size: 1.2rem;
-            margin: 10px 0;
+            z-index: 2;
         }
 
-        .hero-logo-title .btn {
+        .hero-buttons-container {
+            margin-top: 20px;
+            z-index: 2;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .hero-buttons .btn {
             background: #ff5722;
-            padding: 15px 30px;
+            padding: 10px 20px;
             border-radius: 5px;
             text-transform: uppercase;
             color: #fff;
@@ -124,7 +137,6 @@
         section {
             padding: 50px 20px;
             text-align: center;
-            
         }
 
         .feature-cards {
@@ -140,11 +152,13 @@
             border-radius: 10px;
             width: 30%;
         }
-.info {
-  padding-top: 50px;
-  font-weight: bold;
-  color: black;
-}
+
+        .info {
+            padding-top: 50px;
+            font-weight: bold;
+            color: #000;
+        }
+
         form input, form textarea, form button {
             width: 100%;
             padding: 10px;
@@ -181,31 +195,23 @@
 
     <main>
         <section class="hero">
-            <!-- Placeholder for background video -->
             <video autoplay muted loop id="background-video">
                 <source src="https://raw.githubusercontent.com/dartsolarpunk/Arc-Meadow/main/Untitled%202024-12-07%2010.46.12.mp4" type="video/mp4">
-                <!-- Fallback background image -->
                 <img src="https://raw.githubusercontent.com/dartsolarpunk/Arc-Meadow/main/Arrow%20Film%202.png" alt="Background">
             </video>
-      
-            <div class="hero-logo-title">
-                <img src="https://raw.githubusercontent.com/dartsolarpunk/Arc-Meadow/main/2451db_e1a08e43112342c5aca0e958034164a3~mv2.png" alt="Arc Meadow">
-<br>
-       <br>     
-<br>
-       
-    
-                <p>Where 3D Animation Meets the Future. <br>
-                In development.
-                </p>
-                <br>
-                <br>
-                <a href="#about" class="btn">Learn More</a>
-  
+            <div class="hero-logo-container">
+                <img src="https://raw.githubusercontent.com/dartsolarpunk/Arc-Meadow/main/2451db_e1a08e43112342c5aca0e958034164a3~mv2.png" alt="Arc Meadow Logo">
             </div>
-            
-          
-            
+            <div class="hero-description">
+                <p>Where 3D Animation Meets the Future<br>In Development</p>
+            </div>
+            <div class="hero-buttons-container">
+                <div class="hero-buttons">
+                    <a href="#about" class="btn">Learn More</a>
+                    <a href="https://www.dartmeadow.com/" class="btn" target="_blank">Visit DART Meadow</a>
+                    <a href="https://cargobay.space/" class="btn" target="_blank">Visit DART Cargo Bay</a>
+                </div>
+            </div>
         </section>
 
         <section id="features">
@@ -224,7 +230,9 @@
                     <p>Integrate with industry-standard software for a smooth and efficient animation pipeline.</p>
                 </div>
             </div>
-              <div class="info"><p>Site Artwork Information: <br><br>The background video was completed <br> with Sculpits in Nomad Sculpt and Shaper3D <br> then Video Generation with Kling AI.</p></div>
+            <div class="info">
+                <p>Site Artwork Information:<br><br>The background video was completed with Sculpits in Nomad Sculpt and Shaper3D, then video generation with Kling AI.</p>
+            </div>
         </section>
 
         <section id="about">
