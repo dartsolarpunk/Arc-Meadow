@@ -3,256 +3,638 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Arc Meadow - Cutting-edge 3D animation software powered by the revolutionary Arc Edge Algorithm.">
-    <meta name="keywords" content="Arc Meadow, 3D animation, Arc Edge Algorithm, software suite">
-    <title>Arc Meadow | 3D Animation Software</title>
-    <link rel="icon" href="https://raw.githubusercontent.com/dartsolarpunk/Arc-Meadow/main/2451db_e1a08e43112342c5aca0e958034164a3~mv2.png" type="image/png">
+ 
+  <link rel="icon" href="https://raw.githubusercontent.com/dartsolarpunk/Arc-Meadow/main/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="https://raw.githubusercontent.com/dartsolarpunk/Arc-Meadow/main/favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="https://raw.githubusercontent.com/dartsolarpunk/Arc-Meadow/main/favicon.ico">
+    <title>Dry Meadow | Official Website</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            color: #fff;
-            overflow-x: hidden;
+        /* --- Base & Variables --- */
+        :root {
+            --main-red: #000000; /* Main color from the example */
+            --dark-red: #1e1e1e;
+            --text-light: #ffffff;
+            --text-muted: #d1d1d1;
+            --border-light: rgba(255, 255, 255, 0.5);
+            --bg-dark: #1a1a1a;
         }
 
-        header {
-            position: fixed;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 10px 20px;
-            z-index: 1000;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            background-color: var(--main-red);
+            font-family: 'Oswald', 'Arial Narrow', sans-serif;
+            color: var(--text-light);
+            overflow-x: hidden; /* Prevents horizontal scroll */
+        }
+    #chat-header { text-align: center; margin-bottom: 10px; }
+    #chat-header .chat-logo { width: 800px; object-fit: contain; }
+        a {
+            color: var(--text-light);
+            text-decoration: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* --- Header --- */
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 20px 15px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
         }
 
         .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        .logo img {
-            height: 50px;
-            width: auto;
-        }
-
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 20px;
-        }
-
-        .nav-links li {
-            display: inline;
-        }
-
-        .nav-links a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 1rem;
-        }
-
-        .nav-links .btn {
-            background: #ff5722;
-            padding: 10px 20px;
-            border-radius: 5px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
             text-transform: uppercase;
         }
 
-        .hero {
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .cart-link {
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border-light);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .cart-link span {
+            margin-right: 8px;
+        }
+
+        .menu-toggle {
+            font-size: 2.5rem;
+            line-height: 1;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+        }
+
+        /* --- Mobile Nav Menu (Flyout) --- */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%; /* Start off-screen */
+            width: 100%;
             height: 100vh;
-            position: relative;
-            text-align: center;
+            background-color: var(--main-red);
+            z-index: 1000;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            overflow: hidden;
-            padding-bottom: 100px; /* Adjust as necessary */
-        }
-
-        .hero video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            min-width: 100%;
-            min-height: 100%;
-            z-index: -1;
-            object-fit: cover;
-        }
-
-        .hero img {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            min-width: 100%;
-            min-height: 100%;
-            z-index: -1;
-            object-fit: cover;
-        }
-
-        .hero-logo-container {
-          
-            position: relative;
-            z-index: 2;
-            margin-bottom: 100px;
-        }
-
-        .hero-logo-container img {
-            max-width: 300px;
-            max-height: 300px;
-            margin: 0 auto;
-            display: block;
-        }
-
-        .hero-description {
-            margin-top: 10px;
-            font-size: 1.2rem;
-            z-index: 2;
-        }
-
-        .hero-buttons-container {
-            margin-top: 20px;
-            z-index: 2;
-        }
-
-        .hero-buttons {
-            display: flex;
             justify-content: center;
-            gap: 20px;
+            transition: right 0.3s ease-in-out;
         }
 
-        .hero-buttons .btn {
-            background: #ff5722;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-transform: uppercase;
-            color: #fff;
-            text-decoration: none;
+        .mobile-nav.open {
+            right: 0;
         }
 
-        section {
-            padding: 50px 20px;
+        .nav-close {
+            position: absolute;
+            top: 25px;
+            right: 20px;
+            font-size: 2.5rem;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+        }
+
+        .mobile-nav-links {
+            list-style: none;
             text-align: center;
         }
 
-        .feature-cards {
+        .mobile-nav-links li {
+            margin: 25px 0;
+        }
+
+        .mobile-nav-links a {
+            font-size: 2rem;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .social-links {
             display: flex;
             gap: 20px;
-            justify-content: center;
             margin-top: 30px;
         }
 
-        .card {
-            background: rgba(0, 0, 0, 0.8);
+        .social-links a {
+            font-size: 1.8rem;
+        }
+        
+        .social-links svg {
+            width: 30px;
+            height: 30px;
+            fill: white;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            
+            align-items: center;
+            text-align: center;
             padding: 20px;
-            border-radius: 10px;
-            width: 30%;
+            /* Uses the photo you provided as the background */
+            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('1000024736.jpg');
+            background-size: cover;
+            background-position: center 30%; /* Adjusts focus on the face */
         }
 
-        .info {
-            padding-top: 50px;
-            font-weight: bold;
-            color: #000;
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
         }
 
-        form input, form textarea, form button {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: none;
+        .hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border: 2px solid var(--text-light);
             border-radius: 5px;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            width: 300px;
+            max-width: 100%;
+            transition: all 0.2s ease;
         }
 
-        form button {
-            background: #ff5722;
-            color: #fff;
-            font-size: 1rem;
+        .btn-primary {
+            background-color: var(--text-light);
+            color: var(--main-red);
+        }
+        
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--text-light);
         }
 
-        footer {
-            background: #000;
-            padding: 20px;
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-light);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--text-light);
+            color: var(--main-red);
+        }
+        
+        .scroll-down {
+            margin-top: 40px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+        
+        .scroll-down div {
+            margin-top: 5px;
+            font-size: 1.2rem;
+            line-height: 0.5;
+        }
+
+        /* --- Shop Section --- */
+        .shop-section {
+            
+            padding: 50px 15px;
             text-align: center;
         }
+
+        .shop-grid {
+            
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .shop-item {
+            
+            background-color: var(--dark-red);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            aspect-ratio: 1 / 1; /* Makes items square */
+            transition: background-color 0.2s ease;
+        }
+        
+        .shop-item:hover {
+            background-color: dimgrey;
+        }
+
+        .shop-item-icon {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 15px;
+            fill: var(--text-light);
+        }
+
+        .shop-item-label {
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        /* --- Footer --- */
+        .footer {
+            padding: 40px 15px;
+            background-color: var(--dark-red);
+            text-align: center;
+        }
+        
+        .footer-title {
+            font-size: 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .newsletter-form {
+            max-width: 500px;
+            margin: 0 auto 20px auto;
+        }
+        
+        .newsletter-input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid var(--border-light);
+            background: none;
+            border-radius: 5px;
+            font-family: 'Oswald', sans-serif;
+            color: var(--text-light);
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+        
+        .newsletter-input::placeholder {
+            color: var(--text-muted);
+        }
+        
+        .newsletter-submit {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: var(--text-light);
+            color: var(--main-red);
+            font-family: 'Oswald', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .newsletter-submit:hover {
+            background-color: #ddd;
+        }
+        
+        .footer-legal {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            max-width: 500px;
+            margin: 0 auto 30px auto;
+        }
+        
+        .footer-legal a {
+            text-decoration: underline;
+        }
+        
+        .footer-bottom {
+            margin-top: 30px;
+            border-top: 1px solid var(--border-light);
+            padding-top: 30px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        
+        .footer-links {
+            margin-top: 10px;
+        }
+        
+        .footer-links a {
+            margin: 0 10px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+
+        /* --- Cookie Banner --- */
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--bg-dark);
+            padding: 15px;
+            display: none; /* Changed: Hide by default, show with JS */
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            z-index: 1001;
+        }
+        
+        .cookie-text {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        
+        .cookie-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .cookie-btn {
+            background: #444;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Oswald', sans-serif;
+        }
+        
+        .cookie-btn.accept {
+            background: #f1c40f;
+            color: #333;
+            font-weight: 700;
+        }
+
+        /* --- Desktop Responsive --- */
+        @media (min-width: 768px) {
+            .header {
+                padding: 30px 40px;
+            }
+
+            .nav-controls {
+                gap: 30px;
+            }
+
+            .hero-title {
+                font-size: 5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 2rem;
+            }
+
+            .shop-section {
+                padding: 80px 40px;
+            }
+
+            .shop-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .shop-item-icon {
+                width: 60px;
+                height: 60px;
+            }
+
+            .newsletter-form {
+                display: flex;
+                gap: 10px;
+            }
+            
+            .newsletter-input {
+                width: 70%;
+                margin-bottom: 0;
+            }
+            
+            .newsletter-submit {
+                width: 30%;
+            }
+            
+            .cookie-banner {
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 15px 30px;
+            }
+            
+            .cookie-text {
+                margin-bottom: 0;
+                text-align: left;
+                margin-right: 20px;
+            }
+        }
+
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo">
-            <img src="https://raw.githubusercontent.com/dartsolarpunk/Arc-Meadow/main/2451db_e1a08e43112342c5aca0e958034164a3~mv2.png" alt="Arc Meadow Logo">
+
+    <header class="header">
+        <a href="https://youtube.com/@dry.meadow" class="logo">Dry Meadow</a>
+        <div class="nav-controls">
+            <a href="#" class="cart-link">
+                <span>0</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+            </a>
+            <button id="menu-toggle-btn" class="menu-toggle" aria-label="Open Menu">☰</button>
         </div>
-        <ul class="nav-links">
-            <li><a href="#features">Features</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li><a href="https://www.dartmeadow.com/arc-meadow" class="btn">Try Demo</a></li>
-        </ul>
     </header>
+
+    <nav id="mobile-nav" class="mobile-nav">
+        <button id="nav-close-btn" class="nav-close" aria-label="Close Menu">×</button>
+        <ul class="mobile-nav-links">
+            <li><a href="https://open.spotify.com/artist/2UfOaJlM1f6jGiNu2kRXzd?si=VzIV6erQRny6LKoYXnqKMQ">Music</a></li>
+            <li><a href="https://www.spreadshirt.com/shop/user/dart+meadow/">Shop</a></li>
+            <li><a href="https://youtube.com/@dry.meadow?si=sJLsHcdizUO-sJCr">Video</a></li>
+<li><a href="mailto:justin@dartmeadow.com">Contact</a></li>
+
+
+        </ul>
+        <div class="social-links">
+            <a href="https://www.instagram.com/dartspacepunk?igsh=MzRlODBiNWFlZA==" aria-label="Instagram">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.148 3.227-1.669 4.771-4.919 4.919-1.266.058-1.646.07-4.85.07-3.204 0-3.584-.012-4.85-.07-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.07-1.646-.07-4.85s.012-3.584.07-4.85c.148-3.227 1.669-4.771 4.919-4.919 1.266-.058 1.646-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.305.197-7.303 3.193-7.5 7.5-.058 1.28-.072 1.688-.072 4.947s.014 3.667.072 4.947c.197 4.305 3.193 7.303 7.5 7.5 1.28.058 1.688.072 4.947.072s3.667-.014 4.947-.072c4.305-.197 7.303-3.193 7.5-7.5.058-1.28.072-1.688.072-4.947s-.014-3.667-.072-4.947c-.197-4.305-3.193-7.303-7.5-7.5-1.28-.058-1.688-.072-4.947-.072zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.323c-2.302 0-4.162-1.86-4.162-4.162s1.86-4.162 4.162-4.162 4.162 1.86 4.162 4.162-1.86 4.162-4.162 4.162zm4.708-7.718c-.517 0-.938-.421-.938-.938s.421-.938.938-.938.938.421.938.938-.421.938-.938.938z"/></svg>
+            </a>
+
+            <a href="https://youtube.com/@dry.meadow?si=sJLsHcdizUO-sJCr" aria-label="YouTube">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.016 3.016 0 0 0 2.122-2.136c.502-1.884.502-5.814.502-5.814s0-3.93-.502-5.814zM9.545 15.568V8.432l6.021 3.568-6.021 3.568z"/></svg>
+            </a>
+            <a href="https://open.spotify.com/artist/2UfOaJlM1f6jGiNu2kRXzd?si=VzIV6erQRny6LKoYXnqKMQ" aria-label="Spotify">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.02c-5.514 0-9.98 4.465-9.98 9.98s4.466 9.98 9.98 9.98c5.514 0 9.98-4.465 9.98-9.98s-4.466-9.98-9.98-9.98zm0 17.98c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8zm-2.89-11.3c-.22-.359-.71-.482-1.07-.26-.36.22-.48.71-.26 1.07.69 1.12 1.57 1.83 2.98 2.3 1.4.47 2.93.42 4.35-.15.42-.17.61-.63.44-1.05-.17-.42-.63-.61-1.05-.44-1.15.46-2.36.4-3.5-.04-1.14-.44-1.83-1.02-2.89-1.43zm.93 2.57c-.24-.31-.66-.4-.97-.16-.31.24-.4.66-.16.97.59.76 1.34 1.28 2.45 1.6 1.11.33 2.3.26 3.4-.2.37-.15.54-.56.39-.93-.15-.37-.56-.54-.93-.39-.83.34-1.74.3-2.6-.08-.86-.38-1.46-.8-2.58-1.21zm.02 2.76c-.22-.29-.6-.36-.89-.15-.29.22-.36.6-.15.89.5.6 1.16 1.02 2.05 1.25.88.23 1.8.19 2.68-.1.32-.11.47-.47.36-.79-.11-.32-.47-.47-.79-.36-.7.24-1.45.28-2.18.09-.73-.19-1.27-.52-2.08-.83z"/></svg>
+            </a>
+            <a href="https://music.apple.com/us/artist/drymeadow/1774189791" aria-label="Apple Music">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 0C7.15 0 4.22.92 2.59 2.8C.8 4.86 0 7.41 0 10.3c0 2.02.51 3.82 1.41 5.34c.88 1.48 1.99 2.69 3.32 3.63c1.33.94 2.8 1.41 4.41 1.41c1.55 0 2.99-.44 4.31-1.32c1.33-.88 2.41-2.02 3.25-3.4a.5.5 0 0 0-.44-.75c-.22 0-.42.11-.55.33c-.76 1.27-1.7 2.22-2.8 2.84c-1.1.62-2.31.94-3.64.94c-1.82 0-3.35-.63-4.59-1.91c-1.24-1.28-1.86-2.9-1.86-4.86c0-1.82.6-3.35 1.81-4.6c1.2-.25 2.64-.38 4.29-.38c1.61 0 3.02.12 4.22.36c1.2.24 2.18.67 2.94 1.3c.76.63 1.28 1.47 1.55 2.54a.5.5 0 0 0 .5.44c.25 0 .45-.16.5-.41c-.08-.9-.39-1.81-.94-2.73c-.55-.92-1.28-1.7-2.19-2.33C16.14.7 14.18 0 12 0zm-1.11 11.5c.03-1.63.44-3.02 1.24-4.16c.8-.13 1.8-.2 3.02-.2c-1.84 1.13-2.98 2.68-3.42 4.65c-.13.58-.19 1.16-.19 1.74c0 .58.06 1.16.19 1.74c.44 1.97 1.58 3.52 3.42 4.65c-1.22 0-2.22-.07-3.02-.2c-.8-1.14-1.21-2.53-1.24-4.16a7.2 7.2 0 0 1 0-3.48z"/></svg>
+            </a>
+        </div>
+    </nav>
 
     <main>
         <section class="hero">
-            <video autoplay muted loop id="background-video">
-                <source src="https://raw.githubusercontent.com/dartsolarpunk/Arc-Meadow/main/Untitled%202024-12-07%2010.46.12.mp4" type="video/mp4">
-                <img src="https://raw.githubusercontent.com/dartsolarpunk/Arc-Meadow/main/Arrow%20Film%202.png" alt="Background">
-            </video>
-            <div class="hero-logo-container">
-                <img src="https://raw.githubusercontent.com/dartsolarpunk/Arc-Meadow/main/2451db_e1a08e43112342c5aca0e958034164a3~mv2.png" alt="Arc Meadow Logo">
-            </div>
-            <div class="hero-description">
-                <p>Where 3D Animation Meets the Future<br>In Development</p>
-            </div>
-            <div class="hero-buttons-container">
-                <div class="hero-buttons">
-                    <a href="#about" class="btn">Learn More</a>
-                    <a href="https://www.dartmeadow.com/" class="btn" target="_blank">Visit DART Meadow</a>
-                    <a href="https://cargobay.space/" class="btn" target="_blank">Visit DART Cargo Bay</a>
-                </div>
+              <div id="chat-header">
+<video class="chat-logo" autoplay loop muted playsinline>
+  <source src="dry.mp4" type="video/mp4">
+  A video of drymeadow.
+</video>
+
+
+      </div>
+            <div class="hero-content">
+             <h2 class="hero-subtitle">Projects</h2>
+                
+                <a href="https://dartmeadow.artstation.com/" class="btn btn-primary">Creations</a>
+             </div>
+            <div class="scroll-down">
+                Shop
+                <div>↓</div>
+                <div>↓</div>
+                <div>↓</div>
             </div>
         </section>
 
-        <section id="features">
-            <h2>Core Features</h2>
-            <div class="feature-cards">
-                <div class="card">
-                    <h3>Arc Edge Algorithm</h3>
-                    <p>Leverage the precision and scalability of the Arc Edge Algorithm to unlock unparalleled creative freedom.</p>
-                </div>
-                <div class="card">
-                    <h3>Advanced 3D Modeling</h3>
-                    <p>Streamline your workflow with cutting-edge modeling tools and real-time rendering capabilities.</p>
-                </div>
-                <div class="card">
-                    <h3>Seamless Integrations</h3>
-                    <p>Integrate with industry-standard software for a smooth and efficient animation pipeline.</p>
-                </div>
-            </div>
-            <div class="info">
-                <p>Site Artwork Information:<br><br>The background video was completed with sculpts in Nomad Sculpt and Shaper3D, then video generation with Kling AI.</p>
-            </div>
-        </section>
+        <section class="shop-section">
+            <div class="shop-grid">
+                <a href="https://filmfreeway.com/dartmeadow/photos" class="shop-item">
+                    <svg class="shop-item-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+  <path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/>
+</svg>
+                    <span class="shop-item-label">Studio</span>
+                </a>
+<a href="https://dartmeadow.gumroad.com/" class="shop-item">
+    <svg class="shop-item-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-2 .9-2 2v3.8h1.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7s2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z"/>
+    </svg>
+    <span class="shop-item-label">Blender Extensions</span>
+</a>
 
-        <section id="about">
-            <h2>About Arc Meadow</h2>
-            <p>Arc Meadow is a next-generation 3D animation software suite powered by the revolutionary Arc Edge Algorithm.</p>
-        </section>
 
-        <section id="contact">
-            <h2>Contact Us</h2>
-            <form action="#">
-                <input type="text" name="name" placeholder="Your Name" required>
-                <input type="email" name="email" placeholder="Your Email" required>
-                <textarea name="message" placeholder="Your Message" required></textarea>
-                <button type="submit">Send Message</button>
-            </form>
+                <a href="https://www.spreadshirt.com/shop/user/dart+meadow/" class="shop-item">
+                    <svg class="shop-item-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.5 4.5C20.2 3.6 19.4 3 18.5 3h-13C4.6 3 3.8 3.6 3.5 4.5l-2 5c-.1.2-.1.5 0 .7.1.2.3.4.5.4h2.7l.8 7.3c.1.9.8 1.6 1.7 1.6h9.6c.9 0 1.6-.7 1.7-1.6l.8-7.3h2.7c.2 0 .4-.2.5-.4.1-.2.1-.5 0-.7l-2-5zM12 11c-1.1 0-2-.9-2-2V5h4v4c0 1.1-.9 2-2 2z"/></svg>
+                    <span class="shop-item-label">Merch</span>
+                </a>
+                <a href="https://open.spotify.com/artist/2UfOaJlM1f6jGiNu2kRXzd?si=VzIV6erQRny6LKoYXnqKMQ" class="shop-item">
+                    <svg class="shop-item-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2.02c-5.514 0-9.98 4.465-9.98 9.98s4.466 9.98 9.98 9.98c5.514 0 9.98-4.465 9.98-9.98s-4.466-9.98-9.98-9.98zm0 17.98c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8zm-2.89-11.3c-.22-.359-.71-.482-1.07-.26-.36.22-.48.71-.26 1.07.69 1.12 1.57 1.83 2.98 2.3 1.4.47 2.93.42 4.35-.15.42-.17.61-.63.44-1.05-.17-.42-.63-.61-1.05-.44-1.15.46-2.36.4-3.5-.04-1.14-.44-1.83-1.02-2.89-1.43zm.93 2.57c-.24-.31-.66-.4-.97-.16-.31.24-.4.66-.16.97.59.76 1.34 1.28 2.45 1.6 1.11.33 2.3.26 3.4-.2.37-.15.54-.56.39-.93-.15-.37-.56-.54-.93-.39-.83.34-1.74.3-2.6-.08-.86-.38-1.46-.8-2.58-1.21zm.02 2.76c-.22-.29-.6-.36-.89-.15-.29.22-.36.6-.15.89.5.6 1.16 1.02 2.05 1.25.88.23 1.8.19 2.68-.1.32-.11.47-.47.36-.79-.11-.32-.47-.47-.79-.36-.7.24-1.45.28-2.18.09-.73-.19-1.27-.52-2.08-.83z"/>
+                    </svg>
+                   <span class="shop-item-label">Music</span> 
+                </a>
+            </div>
         </section>
     </main>
 
-    <footer>
-        <p>&copy; 2024 Arc Meadow. All rights reserved.</p>
+    <footer class="footer">
+        <h3 class="footer-title">Newsletter</h3>
+        <form class="newsletter-form">
+            <input type="email" class="newsletter-input" placeholder="Enter Email" required>
+            <button type="submit" class="newsletter-submit">Subscribe</button>
+        </form>
+        <p class="footer-legal">
+            By submitting this form I agree to receive news, tour dates, and special offers
+            from Dry Meadow. By submitting this form you agree to the <a href="https://github.com/dartsolarpunk/Arc-Meadow/blob/main/Privacy%20Policy%20.pdf">Privacy Policy</a>.
+        </p>
+
+        <div class="footer-bottom">
+            © 2025 Dry Meadow
+            <div class="footer-links">
+                <a href="https://open.spotify.com/artist/2UfOaJlM1f6jGiNu2kRXzd?si=VzIV6erQRny6LKoYXnqKMQ">Music</a>
+                <a href="https://github.com/dartsolarpunk/Arc-Meadow/blob/main/Privacy%20Policy%20.pdf">Privacy Policy</a>
+            </div>
+        </div>
     </footer>
+
+    <div id="cookie-banner" class="cookie-banner">
+        <p class="cookie-text">This site uses cookies to provide services at the highest level. By continuing to use the site, you agree to their use.</p>
+        <div class="cookie-buttons">
+            <button id="cookie-more" class="cookie-btn">More</button>
+            <button id="cookie-accept" class="cookie-btn accept">Accept</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuBtn = document.getElementById('menu-toggle-btn');
+            const closeBtn = document.getElementById('nav-close-btn');
+            const mobileNav = document.getElementById('mobile-nav');
+
+            const cookieBanner = document.getElementById('cookie-banner');
+            const cookieAccept = document.getElementById('cookie-accept');
+            const cookieMore = document.getElementById('cookie-more'); // Added this
+            const privacyPolicyUrl = 'https://github.com/dartsolarpunk/Arc-Meadow/blob/main/Privacy%20Policy%20.pdf';
+
+            // Mobile Nav Toggle
+            menuBtn.addEventListener('click', () => {
+                mobileNav.classList.add('open');
+            });
+
+            closeBtn.addEventListener('click', () => {
+                mobileNav.classList.remove('open');
+            });
+
+            // --- Cookie Banner Logic (Updated) ---
+
+            // 1. Check if user already accepted
+            if (!localStorage.getItem('cookieAccepted_v1')) {
+                // If not, show the banner. 'flex' is used because of the CSS rules.
+                cookieBanner.style.display = 'flex';
+            }
+
+            // 2. Handle "Accept" click
+            cookieAccept.addEventListener('click', () => {
+                // Save choice to localStorage
+                localStorage.setItem('cookieAccepted_v1', 'true');
+                // Hide the banner
+                cookieBanner.style.display = 'none';
+            });
+            
+            // 3. Handle "More" click (New)
+            cookieMore.addEventListener('click', () => {
+                // Open the privacy policy in a new tab
+                window.open(privacyPolicyUrl, '_blank');
+            });
+        });
+    </script>
+
 </body>
 </html>
