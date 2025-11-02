@@ -74,17 +74,27 @@
             gap: 20px;
         }
 
-        .cart-link {
+        /* --- New Share Button Style --- */
+        .share-btn {
             display: flex;
             align-items: center;
+            justify-content: center;
             border: 1px solid var(--border-light);
             padding: 5px 10px;
             border-radius: 4px;
-            font-size: 0.9rem;
+            background: none;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: background-color 0.2s ease;
         }
 
-        .cart-link span {
-            margin-right: 8px;
+        .share-btn:hover {
+            background-color: var(--dark-red);
+        }
+        
+        .share-btn svg {
+            width: 20px;
+            height: 20px;
         }
 
         .menu-toggle {
@@ -410,6 +420,30 @@
             color: #333;
             font-weight: 700;
         }
+        
+        /* --- New Share Toast Notification --- */
+        .share-toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #f1c40f; /* Using cookie button color */
+            color: #333;
+            padding: 10px 20px;
+            border-radius: 5px;
+            z-index: 2000;
+            font-weight: 700;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: opacity 0.3s ease, bottom 0.3s ease;
+            pointer-events: none; /* So it can't be clicked */
+        }
+        
+        .share-toast.show {
+            opacity: 1;
+            bottom: 30px; /* Animate upwards slightly */
+        }
+
 
         /* --- Desktop Responsive --- */
         @media (min-width: 768px) {
@@ -476,10 +510,12 @@
     <header class="header">
         <a href="https://youtube.com/@dry.meadow" class="logo">Dry Meadow</a>
         <div class="nav-controls">
-            <a href="#" class="cart-link">
-                <span>0</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-            </a>
+            <!-- Replaced Cart with Share Button -->
+            <button id="share-btn" class="share-btn" aria-label="Share Page">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 8.81C7.5 8.31 6.79 8 6 8c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.23-.09.46-.09.7 0 1.66 1.34 3 3 3s3-1.34 3-3-1.34-3-3-3z"/>
+                </svg>
+            </button>
             <button id="menu-toggle-btn" class="menu-toggle" aria-label="Open Menu">☰</button>
         </div>
     </header>
@@ -596,6 +632,9 @@
         </div>
     </div>
 
+    <!-- New Toast Notification Element -->
+    <div id="share-toast" class="share-toast">Link Copied!</div>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const menuBtn = document.getElementById('menu-toggle-btn');
@@ -604,8 +643,12 @@
 
             const cookieBanner = document.getElementById('cookie-banner');
             const cookieAccept = document.getElementById('cookie-accept');
-            const cookieMore = document.getElementById('cookie-more'); // Added this
+            const cookieMore = document.getElementById('cookie-more');
             const privacyPolicyUrl = 'https://github.com/dartsolarpunk/Arc-Meadow/blob/main/Privacy%20Policy%20.pdf';
+
+            // New Share Button Elements
+            const shareBtn = document.getElementById('share-btn');
+            const shareToast = document.getElementById('share-toast');
 
             // Mobile Nav Toggle
             menuBtn.addEventListener('click', () => {
@@ -616,29 +659,79 @@
                 mobileNav.classList.remove('open');
             });
 
-            // --- Cookie Banner Logic (Updated) ---
-
-            // 1. Check if user already accepted
+            // --- Cookie Banner Logic ---
             if (!localStorage.getItem('cookieAccepted_v1')) {
-                // If not, show the banner. 'flex' is used because of the CSS rules.
                 cookieBanner.style.display = 'flex';
             }
-
-            // 2. Handle "Accept" click
             cookieAccept.addEventListener('click', () => {
-                // Save choice to localStorage
                 localStorage.setItem('cookieAccepted_v1', 'true');
-                // Hide the banner
                 cookieBanner.style.display = 'none';
             });
-            
-            // 3. Handle "More" click (New)
             cookieMore.addEventListener('click', () => {
-                // Open the privacy policy in a new tab
                 window.open(privacyPolicyUrl, '_blank');
+            });
+
+            // --- New Share Button Logic ---
+            shareBtn.addEventListener('click', async () => {
+                const shareData = {
+                    title: document.title,
+                    text: 'Check out the official Dry Meadow website!',
+                    url: window.location.href // Gets the current page URL
+                };
+
+                try {
+                    // Try using the native Web Share API
+                    if (navigator.share) {
+                        await navigator.share(shareData);
+                        console.log('Page shared successfully');
+                    } else {
+                        // Fallback if Web Share is not supported
+                        throw new Error('Web Share API not supported.');
+                    }
+                } catch (err) {
+                    console.warn(err.message);
+                    // Fallback: Copy link to clipboard
+                    try {
+                        if (navigator.clipboard && window.isSecureContext) {
+                            // Modern async clipboard API
+                            await navigator.clipboard.writeText(shareData.url);
+                        } else {
+                            // Deprecated fallback for older/insecure contexts
+                            const textArea = document.createElement('textarea');
+                            textArea.value = shareData.url;
+                            textArea.style.position = 'fixed';
+                            textArea.style.opacity = '0';
+                            document.body.appendChild(textArea);
+                            textArea.focus();
+                            textArea.select();
+                            
+                            if (!document.execCommand('copy')) {
+                                throw new Error('Failed to copy with execCommand.');
+                            }
+                            document.body.removeChild(textArea);
+                        }
+                        
+                        // Show "Copied!" toast
+                        shareToast.textContent = 'Link Copied!';
+                        shareToast.classList.add('show');
+                        setTimeout(() => {
+                            shareToast.classList.remove('show');
+                        }, 2000); // Hide after 2 seconds
+
+                    } catch (copyErr) {
+                        console.error('Failed to copy link:', copyErr);
+                        // Show error toast
+                        shareToast.textContent = 'Failed to Copy';
+                        shareToast.classList.add('show');
+                        setTimeout(() => {
+                            shareToast.classList.remove('show');
+                        }, 2000);
+                    }
+                }
             });
         });
     </script>
 
 </body>
 </html>
+
